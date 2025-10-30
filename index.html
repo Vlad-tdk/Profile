@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vladimir Martemianov - iOS Developer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; background: #0a0a0a; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); padding: 20px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(102, 126, 234, 0.3); border-bottom: 1px solid rgba(102, 126, 234, 0.2); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #667eea; }
+        .nav-content { display: flex; align-items: center; gap: 40px; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #667eea; }
+        .lang-switcher { display: flex; gap: 10px; }
+        .lang-btn { background: rgba(102, 126, 234, 0.2); color: #fff; border: 1px solid rgba(102, 126, 234, 0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s; }
+        .lang-btn:hover { background: rgba(102, 126, 234, 0.4); }
+        .lang-btn.active { background: #667eea; border-color: #667eea; }
+        .hero { padding: 120px 0; text-align: center; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.2), transparent 70%); animation: pulse 8s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 56px; margin-bottom: 20px; color: #fff; animation: fadeInUp 1s ease; }
+        .hero .subtitle { font-size: 24px; color: #a0a0a0; margin-bottom: 40px; animation: fadeInUp 1s ease 0.2s backwards; }
+        .hero .description { font-size: 18px; color: #c0c0c0; max-width: 700px; margin: 0 auto 40px; animation: fadeInUp 1s ease 0.4s backwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; animation: fadeInUp 1s ease 0.6s backwards; }
+        .btn { padding: 16px 40px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #667eea; color: white; border: 2px solid #667eea; }
+        .btn-primary:hover { background: #5568d3; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: transparent; color: #fff; border: 2px solid #667eea; }
+        .btn-secondary:hover { background: rgba(102, 126, 234, 0.1); transform: translateY(-2px); }
+        section { padding: 80px 0; background: #0f0f0f; }
+        section:nth-child(even) { background: #0a0a0a; }
+        h2 { font-size: 42px; margin-bottom: 50px; text-align: center; color: #fff; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: rgba(20, 20, 20, 0.8); padding: 40px; border-radius: 12px; border: 1px solid rgba(102, 126, 234, 0.2); transition: all 0.3s; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3); border-color: #667eea; }
+        .service-card h3 { font-size: 24px; margin-bottom: 15px; color: #667eea; }
+        .service-card p { color: #c0c0c0; font-size: 16px; }
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .skill-category { background: rgba(20, 20, 20, 0.8); padding: 30px; border-radius: 12px; border: 1px solid rgba(102, 126, 234, 0.2); }
+        .skill-category h3 { color: #667eea; margin-bottom: 15px; font-size: 20px; }
+        .skill-category ul { list-style: none; }
+        .skill-category li { color: #c0c0c0; padding: 8px 0; border-bottom: 1px solid rgba(102, 126, 234, 0.1); }
+        .skill-category li:last-child { border-bottom: none; }
+        .experience-timeline { max-width: 900px; margin: 0 auto; }
+        .timeline-item { background: rgba(20, 20, 20, 0.8); padding: 40px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; border: 1px solid rgba(102, 126, 234, 0.2); }
+        .timeline-item h3 { color: #667eea; font-size: 24px; margin-bottom: 10px; }
+        .timeline-period { color: #888; font-size: 14px; margin-bottom: 20px; }
+        .timeline-item ul { list-style: none; color: #c0c0c0; }
+        .timeline-item li { padding: 8px 0; padding-left: 20px; position: relative; }
+        .timeline-item li::before { content: '▹'; position: absolute; left: 0; color: #667eea; }
+        .contact-section { text-align: center; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); }
+        .contact-info { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+        .contact-item { display: flex; align-items: center; gap: 15px; color: #c0c0c0; font-size: 18px; }
+        .contact-item a { color: #667eea; text-decoration: none; transition: color 0.3s; }
+        .contact-item a:hover { color: #5568d3; }
+        footer { background: #050505; padding: 30px 0; text-align: center; color: #666; }
+        .availability-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 255, 100, 0.1); padding: 12px 24px; border-radius: 30px; border: 1px solid rgba(0, 255, 100, 0.3); margin-top: 20px; animation: fadeInUp 1s ease 0.8s backwards; }
+        .status-dot { width: 12px; height: 12px; background: #00ff64; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .availability-badge span { color: #00ff64; font-weight: 600; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero .subtitle { font-size: 18px; }
+            .nav-links { display: none; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">VM</div>
+            <div class="nav-content">
+                <ul class="nav-links">
+                    <li><a href="#services" data-i18n="nav.services">Услуги</a></li>
+                    <li><a href="#skills" data-i18n="nav.skills">Навыки</a></li>
+                    <li><a href="#experience" data-i18n="nav.experience">Опыт</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Контакты</a></li>
+                </ul>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Vladimir Martemianov</h1>
+            <p class="subtitle" data-i18n="hero.subtitle">iOS Разработчик</p>
+            <p class="description" data-i18n="hero.description">4+ года коммерческой разработки | Масштабируемые решения | Любая сложность</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary" data-i18n="hero.cta1">Заказать проект</a>
+                <a href="#experience" class="btn btn-secondary" data-i18n="hero.cta2">Смотреть портфолио</a>
+            </div>
+            <div class="availability-badge"><div class="status-dot"></div><span data-i18n="hero.available">Доступен для новых проектов</span></div>
+        </div>
+    </section>
+    <section id="services">
+        <div class="container">
+            <h2 data-i18n="services.title">Готов реализовать проекты любой сложности</h2>
+            <div class="services-grid">
+                <div class="service-card"><h3 data-i18n="services.s1.title">🚀 Разработка с нуля</h3><p data-i18n="services.s1.desc">Создание iOS приложений любой сложности от MVP до enterprise-решений. Полный цикл: от архитектуры до публикации в App Store.</p></div>
+                <div class="service-card"><h3 data-i18n="services.s2.title">💰 Монетизация и подписки</h3><p data-i18n="services.s2.desc">Интеграция StoreKit 2, настройка In-App Purchase, системы подписок с максимальной конверсией. Опыт увеличения конверсии на 17.8%.</p></div>
+                <div class="service-card"><h3 data-i18n="services.s3.title">🔧 Доработка и оптимизация</h3><p data-i18n="services.s3.desc">Рефакторинг legacy кода, миграция Objective-C → Swift, оптимизация производительности. Опыт снижения crash rate на 40%.</p></div>
+                <div class="service-card"><h3 data-i18n="services.s4.title">🔐 Безопасность</h3><p data-i18n="services.s4.desc">Надежная аутентификация (Apple/Google/Facebook), защита данных, Keychain, PIN-коды, биометрия. Защита от brute force.</p></div>
+                <div class="service-card"><h3 data-i18n="services.s5.title">🎨 UI/UX реализация</h3><p data-i18n="services.s5.desc">Разработка сложных интерфейсов на UIKit и SwiftUI, кастомные анимации, фоторедакторы, адаптивный дизайн.</p></div>
+                <div class="service-card"><h3 data-i18n="services.s6.title">⚙️ CI/CD и тестирование</h3><p data-i18n="services.s6.desc">Настройка автоматизации, unit-тесты, snapshot-тесты, интеграция с TestFlight, Firebase Crashlytics.</p></div>
+            </div>
+        </div>
+    </section>
+    <section id="skills">
+        <div class="container">
+            <h2 data-i18n="skills.title">Технический стек</h2>
+            <div class="skills-container">
+                <div class="skill-category"><h3 data-i18n="skills.dev.title">Разработка</h3><ul><li>Swift, Objective-C</li><li>UIKit, SwiftUI</li><li>async/await, Actors</li><li>Core Data, Foundation</li></ul></div>
+                <div class="skill-category"><h3 data-i18n="skills.arch.title">Архитектура</h3><ul><li>MVVM, VIPER</li><li>Clean Swift</li><li>SOLID принципы</li><li>Coordinator Pattern</li></ul></div>
+                <div class="skill-category"><h3 data-i18n="skills.store.title">App Store</h3><ul><li>StoreKit 2</li><li>In-App Purchase</li><li>TestFlight</li><li>Universal Links</li></ul></div>
+                <div class="skill-category"><h3 data-i18n="skills.tools.title">Инструменты</h3><ul><li>Git, CocoaPods, SPM</li><li>Firebase, Crashlytics</li><li>Unit/UI Testing</li><li>CI/CD, Jira</li></ul></div>
+            </div>
+        </div>
+    </section>
+    <section id="experience">
+        <div class="container">
+            <h2 data-i18n="experience.title">Опыт работы</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item"><h3>iOS Developer | The company specializes in iOS app development outsourcing</h3><div class="timeline-period" data-i18n="experience.e1.period">Апрель 2024 — настоящее время</div><ul><li data-i18n="experience.e1.i1">Разработка production мессенджеров с тысячами активных пользователей</li><li data-i18n="experience.e1.i2">Создал продвинутый фоторедактор на UIKit + SwiftUI</li><li data-i18n="experience.e1.i3">Реализовал систему поддержки, сократив время обработки заявок на 35%</li><li data-i18n="experience.e1.i4">Снизил crash rate на 40% через централизованную обработку ошибок</li><li data-i18n="experience.e1.i5">Настроил CI/CD pipeline и покрытие тестами</li><li data-i18n="experience.e1.i6">Мигрировал legacy Objective-C код в современную Swift архитектуру</li></ul></div>
+                <div class="timeline-item"><h3>iOS Developer | KIR JOHNSON</h3><div class="timeline-period" data-i18n="experience.e2.period">Январь 2020 — Март 2024</div><ul><li data-i18n="experience.e2.i1">Разработка приложений с subscription-based монетизацией</li><li data-i18n="experience.e2.i2">Интеграция мультиплатформенной аутентификации (Apple/Google/Facebook)</li><li data-i18n="experience.e2.i3">Построил надежную систему подписок на StoreKit 2</li><li data-i18n="experience.e2.i4">Увеличил конверсию подписок на 17.8%</li><li data-i18n="experience.e2.i5">Перевел проекты на модульную архитектуру</li><li data-i18n="experience.e2.i6">Реализовал систему аналитики и логирования</li></ul></div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 data-i18n="contact.title">Готов обсудить ваш проект</h2>
+            <p style="color: #c0c0c0; font-size: 18px; margin-bottom: 20px;" data-i18n="contact.subtitle">Работаю удаленно | Готов приступить немедленно | Полная занятость</p>
+            <div class="contact-info">
+                <div class="contact-item"><span>📧</span><a href="mailto:tdk@null.net">tdk@null.net</a></div>
+                <div class="contact-item"><span>📱</span><a href="https://t.me/smail_ios" data-i18n="contact.telegram">Telegram</a></div>
+                <div class="contact-item"><span>💻</span><a href="https://github.com/Vlad-tdk" data-i18n="contact.github">GitHub</a></div>
+                <div class="contact-item"><span>📍</span><span data-i18n="contact.location">Нови-Сад, Сербия</span></div>
+            </div>
+            <div style="margin-top: 50px;"><a href="mailto:tdk@null.net" class="btn btn-primary" data-i18n="contact.cta">Написать мне</a></div>
+        </div>
+    </section>
+    <footer><div class="container"><p>&copy; 2024 Владимир Мартемьянов. <span data-i18n="footer.rights">Все права защищены.</span></p></div></footer>
+    <script>
+const tr={ru:{'nav.services':'Услуги','nav.skills':'Навыки','nav.experience':'Опыт','nav.contact':'Контакты','hero.subtitle':'iOS Разработчик','hero.description':'4+ года коммерческой разработки | Масштабируемые решения | Любая сложность','hero.cta1':'Заказать проект','hero.cta2':'Смотреть портфолио','hero.available':'Доступен для новых проектов','services.title':'Готов реализовать проекты любой сложности','services.s1.title':'🚀 Разработка с нуля','services.s1.desc':'Создание iOS приложений любой сложности от MVP до enterprise-решений. Полный цикл: от архитектуры до публикации в App Store.','services.s2.title':'💰 Монетизация и подписки','services.s2.desc':'Интеграция StoreKit 2, настройка In-App Purchase, системы подписок с максимальной конверсией. Опыт увеличения конверсии на 17.8%.','services.s3.title':'🔧 Доработка и оптимизация','services.s3.desc':'Рефакторинг legacy кода, миграция Objective-C → Swift, оптимизация производительности. Опыт снижения crash rate на 40%.','services.s4.title':'🔐 Безопасность','services.s4.desc':'Надежная аутентификация (Apple/Google/Facebook), защита данных, Keychain, PIN-коды, биометрия. Защита от brute force.','services.s5.title':'🎨 UI/UX реализация','services.s5.desc':'Разработка сложных интерфейсов на UIKit и SwiftUI, кастомные анимации, фоторедакторы, адаптивный дизайн.','services.s6.title':'⚙️ CI/CD и тестирование','services.s6.desc':'Настройка автоматизации, unit-тесты, snapshot-тесты, интеграция с TestFlight, Firebase Crashlytics.','skills.title':'Технический стек','skills.dev.title':'Разработка','skills.arch.title':'Архитектура','skills.store.title':'App Store','skills.tools.title':'Инструменты','experience.title':'Опыт работы','experience.e1.period':'Апрель 2024 — настоящее время','experience.e1.i1':'Разработка production мессенджеров с тысячами активных пользователей','experience.e1.i2':'Создал продвинутый фоторедактор на UIKit + SwiftUI','experience.e1.i3':'Реализовал систему поддержки, сократив время обработки заявок на 35%','experience.e1.i4':'Снизил crash rate на 40% через централизованную обработку ошибок','experience.e1.i5':'Настроил CI/CD pipeline и покрытие тестами','experience.e1.i6':'Мигрировал legacy Objective-C код в современную Swift архитектуру','experience.e2.period':'Январь 2020 — Март 2024','experience.e2.i1':'Разработка приложений с subscription-based монетизацией','experience.e2.i2':'Интеграция мультиплатформенной аутентификации (Apple/Google/Facebook)','experience.e2.i3':'Построил надежную систему подписок на StoreKit 2','experience.e2.i4':'Увеличил конверсию подписок на 17.8%','experience.e2.i5':'Перевел проекты на модульную архитектуру','experience.e2.i6':'Реализовал систему аналитики и логирования','contact.title':'Готов обсудить ваш проект','contact.subtitle':'Работаю удаленно | Готов приступить немедленно | Полная занятость','contact.telegram':'Telegram','contact.github':'GitHub','contact.location':'Нови-Сад, Сербия','contact.cta':'Написать мне','footer.rights':'Все права защищены.'},en:{'nav.services':'Services','nav.skills':'Skills','nav.experience':'Experience','nav.contact':'Contact','hero.subtitle':'iOS Developer','hero.description':'4+ years of commercial development | Scalable solutions | Any complexity','hero.cta1':'Order Project','hero.cta2':'View Portfolio','hero.available':'Available for new projects','services.title':'Ready to deliver projects of any complexity','services.s1.title':'🚀 Development from scratch','services.s1.desc':'Building iOS applications of any complexity from MVP to enterprise solutions. Full cycle: from architecture to App Store publishing.','services.s2.title':'💰 Monetization & Subscriptions','services.s2.desc':'StoreKit 2 integration, In-App Purchase setup, subscription systems with maximum conversion. Experience increasing conversion by 17.8%.','services.s3.title':'🔧 Enhancement & Optimization','services.s3.desc':'Legacy code refactoring, Objective-C → Swift migration, performance optimization. Experience reducing crash rate by 40%.','services.s4.title':'🔐 Security','services.s4.desc':'Reliable authentication (Apple/Google/Facebook), data protection, Keychain, PIN codes, biometrics. Brute force protection.','services.s5.title':'🎨 UI/UX Implementation','services.s5.desc':'Complex interface development with UIKit and SwiftUI, custom animations, photo editors, adaptive design.','services.s6.title':'⚙️ CI/CD & Testing','services.s6.desc':'Automation setup, unit tests, snapshot tests, TestFlight integration, Firebase Crashlytics.','skills.title':'Technical Stack','skills.dev.title':'Development','skills.arch.title':'Architecture','skills.store.title':'App Store','skills.tools.title':'Tools','experience.title':'Work Experience','experience.e1.period':'April 2024 — Present','experience.e1.i1':'Developing production messengers with thousands of active users','experience.e1.i2':'Created advanced photo editor with UIKit + SwiftUI','experience.e1.i3':'Implemented support system, reducing ticket processing time by 35%','experience.e1.i4':'Reduced crash rate by 40% through centralized error handling','experience.e1.i5':'Set up CI/CD pipeline and test coverage','experience.e1.i6':'Migrated legacy Objective-C code to modern Swift architecture','experience.e2.period':'January 2020 — March 2024','experience.e2.i1':'Developing applications with subscription-based monetization','experience.e2.i2':'Multi-platform authentication integration (Apple/Google/Facebook)','experience.e2.i3':'Built robust subscription system with StoreKit 2','experience.e2.i4':'Increased subscription conversion by 17.8%','experience.e2.i5':'Transitioned projects to modular architecture','experience.e2.i6':'Implemented analytics and logging system','contact.title':'Ready to discuss your project','contact.subtitle':'Remote work | Ready to start immediately | Full-time','contact.telegram':'Telegram','contact.github':'GitHub','contact.location':'Novi Sad, Serbia','contact.cta':'Contact me','footer.rights':'All rights reserved.'}};
+function setLang(l){document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(tr[l][k])e.textContent=tr[l][k];});document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.getAttribute('data-lang')===l);});}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>setLang(b.getAttribute('data-lang'))));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
+    </script>
+</body>
+</html>
